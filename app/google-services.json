@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "571461602457",
+    "project_id": "tixtrac-191dd",
+    "storage_bucket": "tixtrac-191dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571461602457:android:8648f8f68f369e68047c08",
+        "android_client_info": {
+          "package_name": "com.example.tixtrac"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARTPBtX9qpPextt0tnJPHOD4EBIYnWuOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

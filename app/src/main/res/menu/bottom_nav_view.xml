@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mi_buy_tickets"
+        android:icon="@drawable/ic_buy_ticket"
+        android:title="Shop" />
+
+    <item
+        android:id="@+id/mi_scan"
+        android:icon="@drawable/ic_scan"
+        android:title="Scan" />
+
+    <item
+        android:id="@+id/mi_tickets"
+        android:icon="@drawable/ic_tickets"
+        android:title="Tickets" />
+
+</menu>
