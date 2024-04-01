@@ -4,16 +4,32 @@ import android.R.attr.bitmap
 import android.R.attr.visible
 import android.graphics.Bitmap
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.os.IResultReceiver2.Default
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tixtrac.R
 import com.example.tixtrac.data.Ticket
 import com.example.tixtrac.databinding.FragmentBuyTicketsBinding
+import com.github.alexzhirkevich.customqrgenerator.QrData
+import com.github.alexzhirkevich.customqrgenerator.style.Color
+import com.github.alexzhirkevich.customqrgenerator.vector.QrCodeDrawable
+import com.github.alexzhirkevich.customqrgenerator.vector.QrVectorOptions
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorBackground
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorBallShape
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorColor
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorColors
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorFrameShape
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorLogo
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorLogoPadding
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorLogoShape
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorPixelShape
+import com.github.alexzhirkevich.customqrgenerator.vector.style.QrVectorShapes
 import com.github.sumimakito.awesomeqr.AwesomeQrRenderer
 import com.github.sumimakito.awesomeqr.RenderResult
 import com.github.sumimakito.awesomeqr.option.RenderOption
@@ -46,51 +62,20 @@ class BuyTicketsFragment : Fragment(R.layout.fragment_buy_tickets) {
             val firstName = binding.etFirstName.text.toString()
             val lastName = binding.etLastName.text.toString()
             val ticketTier = binding.etTicketTier.text.toString()
-            makeTicketQR(firstName, lastName, ticketTier)
+            val qrDrawable = makeTicketQR(firstName, lastName, ticketTier)
+            addToDatabase(firstName, lastName, ticketTier, qrDrawable)
         }
     }
 
-    private fun makeTicketQR(firstName: String, lastName: String, ticketTier: String) {
-        val color = Color()
-        color.light = 0xFFFFFFFF.toInt()
-        color.dark = 0xFF000000.toInt()
-        color.background = 0xFFFFFFFF.toInt()
-        color.auto = false
-
-        val renderOption = RenderOption()
-        renderOption.content = "$firstName\n$lastName\n$ticketTier"
-        renderOption.size = 800
-        renderOption.borderWidth = 20
-        renderOption.patternScale = 0.35f
-        renderOption.roundedPatterns = false
-        renderOption.clearBorder = true
-        renderOption.color = color
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val result = AwesomeQrRenderer.render(renderOption)
-                if (result.bitmap != null) {
-                    withContext(Dispatchers.Main){
-                        binding.ivTicketQR.setImageBitmap(result.bitmap)
-                    }
-                    addToDatabase(firstName, lastName, ticketTier, result.bitmap.toString())
-                }
-                else {
-                    Toast.makeText(
-                        requireContext(),
-                        "QR Bitmap is null",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-            catch (e : Exception){
-                Log.d(TAG, e.message.toString())
-            }
-        }
+    private fun makeTicketQR(firstName: String, lastName: String, ticketTier: String) : Drawable {
+        val data = QrData.Text("$firstName\n$lastName\n$ticketTier")
+        val drawable = QrCodeDrawable(data)
+        binding.ivTicketQR.setImageDrawable(drawable)
+        return drawable
     }
 
-    private fun addToDatabase(firstName: String, lastName: String, ticketTier: String, qrBitmapString: String){
-        val ticket = Ticket(firstName, lastName, ticketTier, qrBitmapString)
+    private fun addToDatabase(firstName: String, lastName: String, ticketTier: String, qrDrawable: Drawable){
+        val ticket = Ticket(firstName, lastName, ticketTier, qrDrawable)
         databaseReference.add(ticket)
             .addOnSuccessListener{
                 Log.d(TAG, "Added document to DB")

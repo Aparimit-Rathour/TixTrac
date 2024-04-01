@@ -56,6 +56,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform(libs.firebase.bom))
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+    implementation ("com.github.alexzhirkevich:custom-qr-generator:2.0.0-alpha01")
     implementation ("com.github.SumiMakito:AwesomeQRCode:1.2.0"){
         exclude("com.waynejo", "androidndkgif")
     }
