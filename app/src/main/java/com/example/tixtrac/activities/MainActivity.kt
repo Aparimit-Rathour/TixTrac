@@ -1,6 +1,7 @@
 package com.example.tixtrac.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +20,32 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.mainFragmentContainer,BuyTicketsFragment())
             commit()
+        }
+
+        binding.bottomNavView.setOnItemSelectedListener {item ->
+            when(item.itemId){
+                R.id.mi_buy_tickets -> {
+                    supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.mainFragmentContainer,BuyTicketsFragment())
+                        commit()
+                    }
+                }
+                R.id.mi_scan -> {
+                    Toast.makeText(
+                        this,
+                        "Feature not available yet!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                R.id.mi_tickets -> {
+                    Toast.makeText(
+                        this,
+                        "Feature not available yet!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            true
         }
     }
 }

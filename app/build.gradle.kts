@@ -55,8 +55,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform(libs.firebase.bom))
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
     implementation ("com.github.SumiMakito:AwesomeQRCode:1.2.0"){
         exclude("com.waynejo", "androidndkgif")
     }
-    implementation ("io.github.waynejo:androidndkgif:1.0.1")
-}
+    implementation ("io.github.waynejo:androidndkgif:1.0.1") }
