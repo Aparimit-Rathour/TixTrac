@@ -1,4 +1,4 @@
-This is the repository for a Event Ticketing App
+This is the repository for TixTrac Application.
 
 # Helpful Repositories
 - https://github.com/alexzhirkevich/custom-qr-generator
